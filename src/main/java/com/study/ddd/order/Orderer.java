@@ -1,2 +1,4 @@
-package com.study.ddd.order;public class Orderer {
+package com.study.ddd.order;
+
+public class Orderer {
 }
