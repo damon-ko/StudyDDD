@@ -1,4 +1,4 @@
-package com.study.ddd.order;
+package com.study.ddd.domain.order;
 
 public class OrderLine {
     private final Product product;

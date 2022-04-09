@@ -1,9 +1,9 @@
-package com.study.ddd.order;
+package com.study.ddd.domain.order;
 
 import java.util.List;
 
 public class Order {
-    private String orderNumber;
+    private OrderNumber id;
     private List<OrderLine> orderLines;
     private Money totalAmounts;
     private ShippingInfo shippingInfo;
@@ -15,15 +15,15 @@ public class Order {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Order order = (Order) obj;
-        if (this.orderNumber == null) return false;
-        return this.orderNumber.equals(order.orderNumber);
+        if (this.id == null) return false;
+        return this.id.equals(order.id);
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((orderNumber == null) ? 0 : orderNumber.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
 
@@ -60,17 +60,17 @@ public class Order {
 
     public void changeShipped() {}
     public void changeShippingInfo(ShippingInfo newShipping) {
-        verifyNotYetShipped();
+        checkShippingInfoChangeable();
         setShippingInfo(newShipping);
     }
 
-    private void verifyNotYetShipped() {
+    private void checkShippingInfoChangeable() {
         if (state != OrderState.PAYMENT_WAITING && state != OrderState.PREPARING)
             throw new IllegalStateException("Already shipped");
     }
 
     public void cancel() {
-        verifyNotYetShipped();
+        checkShippingInfoChangeable();
         this.state = OrderState.CANCELED;
     }
     public void completePayment() {}
